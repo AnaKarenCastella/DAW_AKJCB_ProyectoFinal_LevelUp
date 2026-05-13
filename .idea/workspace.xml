@@ -10,39 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96029e3f-ca13-4803-af95-10222b3ba055" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/controller/LoginServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/controller/TiendaServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/CarritoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/ChatDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/Conexion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/DetalleCarritoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/DetallePedidoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/MensajeDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/PedidoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/UsuarioDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/dao/VideojuegoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/Carrito.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/Chat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/DetalleCarrito.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/DetallePedido.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/EstadoChat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/EstadoPedido.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/Mensaje.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/Pedido.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/Rol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/Usuario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/app/model/Videojuego.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/login.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tienda.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/assets/img/levelup-logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/controller/TiendaServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/controller/TiendaServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tienda.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tienda.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +78,7 @@
       <recent name="com.app.model" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\anaca\Documents\ProyectoFinal_LevelUp\DAW_AKJCB_ProyectoFinal_LevelUp\src\main\webapp\assets\img" />
       <recent name="C:\Users\anaca\Documents\ProyectoFinal_LevelUp\DAW_AKJCB_ProyectoFinal_LevelUp\src\main\webapp\WEB-INF" />
     </key>
   </component>
@@ -211,7 +184,7 @@
       <workItem from="1777565515576" duration="1247000" />
       <workItem from="1777960123196" duration="3069000" />
       <workItem from="1778164983141" duration="2511000" />
-      <workItem from="1778652885613" duration="1338000" />
+      <workItem from="1778652885613" duration="5247000" />
     </task>
     <servers />
   </component>
