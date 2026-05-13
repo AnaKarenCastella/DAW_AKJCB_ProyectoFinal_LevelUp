@@ -389,7 +389,7 @@
     %>
 
     <div class="card">
-        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/header.jpg" alt="Videojuego">
+        <img src="<%= v.getImagenUrl() %>" alt="Videojuego">
 
         <div class="contenido">
             <div class="titulo"><%= v.getTitulo() %></div>
