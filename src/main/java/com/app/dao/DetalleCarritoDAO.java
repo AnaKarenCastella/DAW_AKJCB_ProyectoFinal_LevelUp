@@ -1,0 +1,107 @@
+package com.app.dao;
+
+import com.app.model.DetalleCarrito;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DetalleCarritoDAO {
+
+    // Agregar producto al carrito
+    public void agregarProducto(int idCarrito, int idJuego, int cantidad, double subtotal) {
+        String sql = "INSERT INTO detalle_carrito(cantidad, subtotal, id_carrito, id_juego) VALUES (?, ?, ?, ?)";
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, cantidad);
+            ps.setDouble(2, subtotal);
+            ps.setInt(3, idCarrito);
+            ps.setInt(4, idJuego);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Obtener productos por carrito
+    public List<DetalleCarrito> obtenerPorCarrito(int idCarrito) {
+        List<DetalleCarrito> lista = new ArrayList<>();
+        String sql = "SELECT * FROM detalle_carrito WHERE id_carrito = ?";
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idCarrito);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                DetalleCarrito d = new DetalleCarrito();
+
+                d.setIdDetalleCarrito(rs.getInt("id_detalle_carrito"));
+                d.setCantidad(rs.getInt("cantidad"));
+                d.setSubtotal(rs.getDouble("subtotal"));
+                d.setIdCarrito(rs.getInt("id_carrito"));
+                d.setIdJuego(rs.getInt("id_juego"));
+
+                lista.add(d);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    // Actualizar cantidad y subtotal
+    public void actualizarCantidad(int idDetalleCarrito, int cantidad, double subtotal) {
+        String sql = "UPDATE detalle_carrito SET cantidad = ?, subtotal = ? WHERE id_detalle_carrito = ?";
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, cantidad);
+            ps.setDouble(2, subtotal);
+            ps.setInt(3, idDetalleCarrito);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Eliminar un producto del carrito
+    public void eliminarDetalle(int idDetalleCarrito) {
+        String sql = "DELETE FROM detalle_carrito WHERE id_detalle_carrito = ?";
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idDetalleCarrito);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Vaciar carrito completo
+    public void vaciarCarrito(int idCarrito) {
+        String sql = "DELETE FROM detalle_carrito WHERE id_carrito = ?";
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idCarrito);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
