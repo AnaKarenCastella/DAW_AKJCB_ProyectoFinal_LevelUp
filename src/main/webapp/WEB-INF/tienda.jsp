@@ -399,6 +399,22 @@
             </div>
 
             <div class="meta">
+                Géneros: <%= v.getGeneros() %>
+            </div>
+
+            <div class="meta">
+                Plataformas: <%= v.getPlataforma() %>
+            </div>
+
+            <div class="meta">
+                Rating: <%= v.getRating() %> / 5
+            </div>
+
+            <div class="meta">
+                Lanzamiento: <%= v.getFechaLanzamiento() %>
+            </div>
+
+            <div class="meta">
                 Plataforma: <%= v.getPlataforma() != null ? v.getPlataforma() : "PC" %>
             </div>
 
