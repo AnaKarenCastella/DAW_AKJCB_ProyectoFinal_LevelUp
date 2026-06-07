@@ -286,4 +286,121 @@ public class RawgService {
 
         return matriz[a.length()][b.length()];
     }
+
+    public Videojuego obtenerJuegoPorId(int id) {
+
+        Videojuego v = null;
+
+        try {
+
+            String endpoint =
+                    "https://api.rawg.io/api/games/"
+                            + id
+                            + "?key="
+                            + API_KEY;
+
+            URL url = new URL(endpoint);
+
+            HttpURLConnection conexion =
+                    (HttpURLConnection) url.openConnection();
+
+            conexion.setRequestMethod("GET");
+
+            BufferedReader br =
+                    new BufferedReader(
+                            new InputStreamReader(
+                                    conexion.getInputStream()
+                            )
+                    );
+
+            StringBuilder respuesta = new StringBuilder();
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                respuesta.append(linea);
+            }
+
+            br.close();
+
+            JSONObject juego =
+                    new JSONObject(respuesta.toString());
+
+            v = new Videojuego();
+
+            v.setRawgId(juego.getInt("id"));
+            v.setTitulo(juego.optString("name", "Sin título"));
+            v.setDescripcion(juego.optString("description_raw", "Sin descripción disponible"));
+            v.setRating(juego.optDouble("rating", 0));
+            v.setFechaLanzamiento(juego.optString("released", "Sin fecha"));
+            v.setPrecio(generarPrecio(juego.optDouble("rating", 0)));
+            v.setStock(10);
+
+            if (!juego.isNull("background_image")) {
+                v.setImagenUrl(juego.getString("background_image"));
+            } else {
+                v.setImagenUrl("https://via.placeholder.com/900x400?text=LevelUp");
+            }
+
+            v.setGeneros(obtenerGeneros(juego));
+            v.setPlataforma(obtenerPlataformas(juego));
+            v.setDesarrollador(obtenerDesarrolladores(juego));
+            v.setPublisher(obtenerPublishers(juego));
+            v.setSitioWeb(juego.optString("website", "No disponible"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return v;
+    }
+
+    private String obtenerDesarrolladores(JSONObject juego) {
+
+        JSONArray desarrolladoresJson = juego.optJSONArray("developers");
+
+        if (desarrolladoresJson == null || desarrolladoresJson.length() == 0) {
+            return "No disponible";
+        }
+
+        StringBuilder desarrolladores = new StringBuilder();
+
+        for (int i = 0; i < desarrolladoresJson.length(); i++) {
+            JSONObject desarrollador = desarrolladoresJson.getJSONObject(i);
+
+            desarrolladores.append(
+                    desarrollador.optString("name", "Desarrollador")
+            );
+
+            if (i < desarrolladoresJson.length() - 1) {
+                desarrolladores.append(" | ");
+            }
+        }
+
+        return desarrolladores.toString();
+    }
+
+    private String obtenerPublishers(JSONObject juego) {
+
+        JSONArray publishersJson = juego.optJSONArray("publishers");
+
+        if (publishersJson == null || publishersJson.length() == 0) {
+            return "No disponible";
+        }
+
+        StringBuilder publishers = new StringBuilder();
+
+        for (int i = 0; i < publishersJson.length(); i++) {
+            JSONObject publisher = publishersJson.getJSONObject(i);
+
+            publishers.append(
+                    publisher.optString("name", "Publisher")
+            );
+
+            if (i < publishersJson.length() - 1) {
+                publishers.append(" | ");
+            }
+        }
+
+        return publishers.toString();
+    }
 }
