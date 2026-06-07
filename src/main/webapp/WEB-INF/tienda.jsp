@@ -30,11 +30,6 @@
             padding: 0 42px;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-        }
-
         .brand img {
             height: 44px;
             width: auto;
@@ -52,7 +47,6 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 700;
-            letter-spacing: 0.4px;
         }
 
         .nav-links a:hover,
@@ -65,19 +59,12 @@
             width: calc(100% - 84px);
             min-height: 330px;
             border-radius: 12px;
-            overflow: hidden;
             border: 1px solid rgba(0, 191, 255, 0.18);
-            background:
-                    linear-gradient(90deg, rgba(11, 15, 20, 0.95), rgba(11, 15, 20, 0.65), rgba(11, 15, 20, 0.35)),
-                    linear-gradient(135deg, #0b0f14, #121821, #1f2a37);
+            background: linear-gradient(135deg, #0b0f14, #121821, #1f2a37);
             display: flex;
             align-items: center;
             padding: 60px;
             box-shadow: 0 0 35px rgba(0, 191, 255, 0.08);
-        }
-
-        .hero-content {
-            max-width: 620px;
         }
 
         .hero h1 {
@@ -96,7 +83,6 @@
             margin: 18px 0 28px;
             color: #b9c7d5;
             font-size: 18px;
-            letter-spacing: 1px;
         }
 
         .hero button {
@@ -107,11 +93,6 @@
             padding: 13px 28px;
             font-weight: 800;
             cursor: pointer;
-            letter-spacing: 0.4px;
-        }
-
-        .hero button:hover {
-            background: #33ccff;
         }
 
         .store-bar {
@@ -133,24 +114,15 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             font-weight: 800;
-            white-space: nowrap;
-        }
-
-        .search-section {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
         }
 
         .search-section form {
             display: flex;
-            width: 100%;
-            max-width: 480px;
             gap: 10px;
         }
 
         .search-section input {
-            flex: 1;
+            width: 420px;
             background: #0b0f14;
             color: #ffffff;
             padding: 12px 14px;
@@ -158,10 +130,6 @@
             border-radius: 6px;
             outline: none;
             font-size: 14px;
-        }
-
-        .search-section input::placeholder {
-            color: #7f91a3;
         }
 
         .search-section button {
@@ -172,10 +140,6 @@
             color: #061018;
             font-weight: 800;
             cursor: pointer;
-        }
-
-        .search-section button:hover {
-            background: #33ccff;
         }
 
         .contenedor {
@@ -200,9 +164,15 @@
             box-shadow: 0 0 24px rgba(0, 191, 255, 0.18);
         }
 
+        .card-link {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
         .card img {
             width: 100%;
-            height: 130px;
+            height: 145px;
             object-fit: cover;
             display: block;
         }
@@ -220,37 +190,38 @@
         }
 
         .descripcion {
-            color: #aebdca;
+            color: #00bfff;
             line-height: 1.35;
             font-size: 13px;
-            min-height: 54px;
+            min-height: 36px;
+            font-weight: 700;
         }
 
         .meta {
             margin-top: 8px;
-            color: #7f91a3;
+            color: #9fb0c0;
             font-size: 12px;
+            line-height: 1.3;
         }
 
         .card-bottom {
-            margin-top: 14px;
+            padding: 0 14px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
         }
 
         .precio {
             color: #ffffff;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 800;
         }
 
-        .card form {
+        .card-bottom form {
             margin: 0;
         }
 
-        .card button {
+        .card-bottom button {
             width: 42px;
             height: 36px;
             border: none;
@@ -263,7 +234,7 @@
             border: 1px solid rgba(0, 191, 255, 0.20);
         }
 
-        .card button:hover {
+        .card-bottom button:hover {
             background: #00bfff;
             color: #061018;
         }
@@ -298,45 +269,6 @@
             color: #c7d5e0;
             font-size: 18px;
         }
-
-        @media (max-width: 850px) {
-            .navbar {
-                flex-direction: column;
-                height: auto;
-                gap: 15px;
-                padding: 18px;
-            }
-
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .hero,
-            .store-bar,
-            .contenedor,
-            .benefits,
-            .empty {
-                width: calc(100% - 32px);
-            }
-
-            .hero {
-                padding: 35px;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .store-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .benefits {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 
@@ -359,7 +291,7 @@
 
 <section class="hero">
     <div class="hero-content">
-        <h1>Sube de nivel<br> Comienza tu próxima <span>aventura</span></h1>
+        <h1>Sube de nivel<br>Comienza tu próxima <span>aventura</span></h1>
         <p>Compra videojuegos, descubre ofertas y explora los nuevos lanzamientos.</p>
         <button>Explorar tienda</button>
     </div>
@@ -389,49 +321,45 @@
     %>
 
     <div class="card">
-        <img src="<%= v.getImagenUrl() %>" alt="Videojuego">
 
-        <div class="contenido">
-            <div class="titulo"><%= v.getTitulo() %></div>
+        <a href="<%= request.getContextPath() %>/detalleJuego?id=<%= v.getRawgId() %>" class="card-link">
+            <img src="<%= v.getImagenUrl() %>" alt="Imagen de videojuego">
 
-            <div class="descripcion">
-                <%= v.getDescripcion() %>
+            <div class="contenido">
+                <div class="titulo"><%= v.getTitulo() %></div>
+
+                <div class="descripcion">
+                    <%= v.getGeneros() %>
+                </div>
+
+                <div class="meta">
+                    Plataformas: <%= v.getPlataforma() %>
+                </div>
+
+                <div class="meta">
+                    Rating: <%= v.getRating() %> / 5
+                </div>
+
+                <div class="meta">
+                    Lanzamiento: <%= v.getFechaLanzamiento() %>
+                </div>
+
+                <div class="meta">
+                    Stock: <%= v.getStock() %>
+                </div>
             </div>
+        </a>
 
-            <div class="meta">
-                Géneros: <%= v.getGeneros() %>
-            </div>
+        <div class="card-bottom">
+            <div class="precio">$<%= v.getPrecio() %></div>
 
-            <div class="meta">
-                Plataformas: <%= v.getPlataforma() %>
-            </div>
-
-            <div class="meta">
-                Rating: <%= v.getRating() %> / 5
-            </div>
-
-            <div class="meta">
-                Lanzamiento: <%= v.getFechaLanzamiento() %>
-            </div>
-
-            <div class="meta">
-                Plataforma: <%= v.getPlataforma() != null ? v.getPlataforma() : "PC" %>
-            </div>
-
-            <div class="meta">
-                Stock: <%= v.getStock() %>
-            </div>
-
-            <div class="card-bottom">
-                <div class="precio">$<%= v.getPrecio() %></div>
-
-                <form action="<%= request.getContextPath() %>/carrito" method="post">
-                    <input type="hidden" name="accion" value="agregar">
-                    <input type="hidden" name="idJuego" value="<%= v.getIdJuego() %>">
-                    <button type="submit">+</button>
-                </form>
-            </div>
+            <form action="<%= request.getContextPath() %>/carrito" method="post">
+                <input type="hidden" name="accion" value="agregar">
+                <input type="hidden" name="idJuego" value="<%= v.getRawgId() %>">
+                <button type="submit">+</button>
+            </form>
         </div>
+
     </div>
 
     <%
