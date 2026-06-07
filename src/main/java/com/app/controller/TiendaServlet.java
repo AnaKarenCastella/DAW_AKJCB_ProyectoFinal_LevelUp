@@ -24,8 +24,24 @@ public class TiendaServlet extends HttpServlet {
         List<Videojuego> lista;
 
         if (busqueda != null && !busqueda.trim().isEmpty()) {
-            lista = rawgService.buscarJuegos(busqueda);
-            request.setAttribute("busqueda", busqueda);
+
+            String sugerencia =
+                    rawgService.sugerirCorreccion(busqueda);
+
+            if (sugerencia != null
+                    && !sugerencia.equalsIgnoreCase(busqueda.trim())) {
+
+                lista = rawgService.buscarJuegos(sugerencia);
+
+                request.setAttribute("busqueda", busqueda);
+                request.setAttribute("sugerencia", sugerencia);
+
+            } else {
+
+                lista = rawgService.buscarJuegos(busqueda);
+                request.setAttribute("busqueda", busqueda);
+            }
+
         } else {
             lista = rawgService.obtenerJuegos();
         }

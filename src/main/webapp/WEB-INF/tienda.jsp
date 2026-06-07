@@ -269,6 +269,23 @@
             color: #c7d5e0;
             font-size: 18px;
         }
+
+        .suggestion-box{
+            width: calc(100% - 84px);
+            margin: 18px auto;
+            padding: 15px;
+            border-radius: 8px;
+
+            background: rgba(0,191,255,0.08);
+            border: 1px solid rgba(0,191,255,0.25);
+
+            color: #c7d5e0;
+            font-size: 15px;
+        }
+
+        .suggestion-box strong{
+            color:#00bfff;
+        }
     </style>
 </head>
 
@@ -302,11 +319,38 @@
 
     <div class="search-section">
         <form action="<%= request.getContextPath() %>/tienda" method="get">
-            <input type="text" name="busqueda" placeholder="Buscar juegos...">
+            <input type="text"
+                   name="busqueda"
+                   placeholder="Buscar juegos..."
+                   value="<%= request.getAttribute("busqueda") != null ? request.getAttribute("busqueda") : "" %>">
             <button type="submit">Buscar</button>
         </form>
     </div>
 </section>
+
+
+<%
+    String busquedaRealizada =
+            (String) request.getAttribute("busqueda");
+
+    String sugerencia =
+            (String) request.getAttribute("sugerencia");
+
+    if (sugerencia != null) {
+%>
+
+
+<div class="suggestion-box">
+    Tal vez quisiste decir
+    <strong><%= sugerencia %></strong>
+    en lugar de
+    <strong><%= busquedaRealizada %></strong>.
+</div>
+
+
+<%
+    }
+%>
 
 <%
     List<Videojuego> lista = (List<Videojuego>) request.getAttribute("lista");

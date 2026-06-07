@@ -16,6 +16,12 @@ public class Videojuego {
     private String fechaLanzamiento;
     private String generos;
 
+
+    //Detalles de los videojuegos
+    private String desarrollador;
+    private String publisher;
+    private String sitioWeb;
+
     public Videojuego() {}
 
     public int getIdJuego() {
@@ -112,5 +118,29 @@ public class Videojuego {
 
     public void setGeneros(String generos) {
         this.generos = generos;
+    }
+
+    public String getDesarrollador() {
+        return desarrollador;
+    }
+
+    public void setDesarrollador(String desarrollador) {
+        this.desarrollador = desarrollador;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getSitioWeb() {
+        return sitioWeb;
+    }
+
+    public void setSitioWeb(String sitioWeb) {
+        this.sitioWeb = sitioWeb;
     }
 }

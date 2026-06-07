@@ -188,4 +188,102 @@ public class RawgService {
             return 399.00;
         }
     }
+
+    //Con ayuda de IA generativa
+    public String sugerirCorreccion(String texto) {
+
+        String[] juegosConocidos = {
+                "Zelda",
+                "Minecraft",
+                "Cyberpunk",
+                "Mario",
+                "Halo",
+                "Doom",
+                "Fortnite",
+                "Valorant",
+                "Resident Evil",
+                "Silent Hill",
+                "Grand Theft Auto",
+                "GTA",
+                "The Witcher",
+                "Elden Ring",
+                "Call of Duty",
+                "Assassin's Creed",
+                "God of War",
+                "Final Fantasy",
+                "FIFA",
+                "Mortal Kombat",
+                "Red Dead Redemption",
+                "League of Legends",
+                "Overwatch",
+                "Dark Souls",
+                "Portal",
+                "Half-Life",
+                "Tomb Raider",
+                "Skyrim"
+        };
+
+        String textoNormalizado = texto.toLowerCase().trim();
+
+        String mejorCoincidencia = null;
+        int menorDistancia = Integer.MAX_VALUE;
+
+        for (String juego : juegosConocidos) {
+
+            String juegoNormalizado = juego.toLowerCase();
+
+            int distancia =
+                    calcularDistanciaLevenshtein(
+                            textoNormalizado,
+                            juegoNormalizado
+                    );
+
+            if (distancia < menorDistancia) {
+                menorDistancia = distancia;
+                mejorCoincidencia = juego;
+            }
+        }
+
+        if (menorDistancia <= 3) {
+            return mejorCoincidencia;
+        }
+
+        return null;
+    }
+
+    private int calcularDistanciaLevenshtein(String a, String b) {
+
+        int[][] matriz =
+                new int[a.length() + 1][b.length() + 1];
+
+        for (int i = 0; i <= a.length(); i++) {
+            matriz[i][0] = i;
+        }
+
+        for (int j = 0; j <= b.length(); j++) {
+            matriz[0][j] = j;
+        }
+
+        for (int i = 1; i <= a.length(); i++) {
+
+            for (int j = 1; j <= b.length(); j++) {
+
+                int costo =
+                        a.charAt(i - 1) == b.charAt(j - 1)
+                                ? 0
+                                : 1;
+
+                matriz[i][j] =
+                        Math.min(
+                                Math.min(
+                                        matriz[i - 1][j] + 1,
+                                        matriz[i][j - 1] + 1
+                                ),
+                                matriz[i - 1][j - 1] + costo
+                        );
+            }
+        }
+
+        return matriz[a.length()][b.length()];
+    }
 }
