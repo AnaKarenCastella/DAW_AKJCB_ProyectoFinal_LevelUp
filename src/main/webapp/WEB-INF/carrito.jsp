@@ -3,7 +3,7 @@
 <%@ page import="com.app.model.Carrito" %>
 <%@ page import="com.app.model.DetalleCarrito" %>
 <%@ page import="com.app.model.Videojuego" %>
-
+<%@ page import="com.app.model.Usuario" %>
 <%
     Carrito carrito = (Carrito) request.getAttribute("carrito");
     List<DetalleCarrito> detalles =
@@ -161,7 +161,26 @@
     <nav class="nav-links">
         <a href="<%= request.getContextPath() %>/tienda">Tienda</a>
         <a href="<%= request.getContextPath() %>/carrito">Carrito</a>
-        <a href="<%= request.getContextPath() %>/login">Iniciar sesión</a>
+
+        <%
+            Usuario usuarioSesion =
+                    (Usuario) session.getAttribute("usuario");
+        %>
+
+        <% if (usuarioSesion != null) { %>
+
+        <a href="<%= request.getContextPath() %>/perfil">
+            <%= usuarioSesion.getNombre() %>
+        </a>
+
+        <% } else { %>
+
+        <a href="<%= request.getContextPath() %>/login">
+            Iniciar sesión
+        </a>
+
+        <% } %>
+
     </nav>
 </header>
 

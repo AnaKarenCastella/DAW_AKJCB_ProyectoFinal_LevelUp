@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.app.model.Videojuego" %>
+<%@ page import="com.app.model.Usuario" %>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -301,7 +302,26 @@
         <a href="#">Categorías</a>
         <a href="#">Ofertas</a>
         <a href="#">Novedades</a>
-        <a href="<%= request.getContextPath() %>/login">Iniciar sesión</a>
+
+        <%
+            Usuario usuarioSesion =
+                    (Usuario) session.getAttribute("usuario");
+        %>
+
+        <% if (usuarioSesion != null) { %>
+
+        <a href="<%= request.getContextPath() %>/perfil">
+            <%= usuarioSesion.getNombre() %>
+        </a>
+
+        <% } else { %>
+
+        <a href="<%= request.getContextPath() %>/login">
+            Iniciar sesión
+        </a>
+
+        <% } %>
+
         <a href="<%= request.getContextPath() %>/carrito">
             Carrito
         </a>
