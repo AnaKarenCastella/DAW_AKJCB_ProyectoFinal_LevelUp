@@ -9,7 +9,8 @@ public class UsuarioDAO {
 
     // INSERT
     public void insertar(Usuario usuario) {
-        String sql = "INSERT INTO usuarios(nombre, correo, password, rol, telefono) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios(nombre, correo, password, rol, telefono) " +
+                "VALUES (?, ?, ?, ?::rol_enum, ?)";
 
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -17,7 +18,7 @@ public class UsuarioDAO {
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getCorreo());
             ps.setString(3, usuario.getPassword());
-            ps.setString(4, usuario.getRol()); // ✔ quitamos toString()
+            ps.setString(4, usuario.getRol());
             ps.setString(5, usuario.getTelefono());
 
             ps.executeUpdate();
