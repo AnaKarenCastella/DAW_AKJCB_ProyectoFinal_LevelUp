@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import com.app.dao.ResenaDAO;
+import com.app.model.Resena;
 import com.app.model.Videojuego;
 import com.app.service.RawgService;
 
@@ -8,11 +10,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/detalleJuego")
 public class DetalleJuegoServlet extends HttpServlet {
 
     private RawgService rawgService = new RawgService();
+    private ResenaDAO resenaDAO = new ResenaDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,7 +39,15 @@ public class DetalleJuegoServlet extends HttpServlet {
                 return;
             }
 
+            List<Resena> resenas =
+                    resenaDAO.obtenerPorRawgId(id);
+
+            double promedio =
+                    resenaDAO.obtenerPromedioPorRawgId(id);
+
             request.setAttribute("juego", juego);
+            request.setAttribute("resenas", resenas);
+            request.setAttribute("promedioResenas", promedio);
 
             request.getRequestDispatcher("/WEB-INF/detalle-juego.jsp")
                     .forward(request, response);

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.app.model.Videojuego" %>
-
+<%@ page import="java.util.List" %>
+<%@ page import="com.app.model.Resena" %>
 <%
     Videojuego juego = (Videojuego) request.getAttribute("juego");
 
@@ -247,6 +248,135 @@
                 width: calc(100% - 32px);
             }
         }
+
+        <%-- Este bloque es para mostrar las reseñas --%>
+        .reviews-section {
+            width: calc(100% - 84px);
+            margin: 0 auto 70px;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 24px;
+        }
+
+        .reviews-header {
+            grid-column: 1 / -1;
+            background: #121821;
+            border: 1px solid rgba(0, 191, 255, 0.12);
+            border-radius: 12px;
+            padding: 22px 26px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .reviews-header h2 {
+            margin: 0;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .average-rating {
+            color: #00bfff;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .review-form-box,
+        .review-list {
+            background: #121821;
+            border: 1px solid rgba(0, 191, 255, 0.12);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .review-form-box h3 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #7f91a3;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            font-weight: 800;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: #0b0f14;
+            color: #ffffff;
+            border: 1px solid rgba(0, 191, 255, 0.18);
+            border-radius: 8px;
+            padding: 12px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .review-card {
+            background: #0b0f14;
+            border: 1px solid rgba(0, 191, 255, 0.10);
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .review-top {
+            display: flex;
+            justify-content: space-between;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .review-top span {
+            color: #00bfff;
+            font-weight: 900;
+        }
+
+        .review-card p {
+            color: #c7d5e0;
+            line-height: 1.5;
+        }
+
+        .review-date {
+            color: #7f91a3;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .empty-reviews {
+            color: #c7d5e0;
+        }
+
+        @media (max-width: 900px) {
+            .reviews-section {
+                width: calc(100% - 32px);
+                grid-template-columns: 1fr;
+            }
+
+            .reviews-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 
@@ -343,6 +473,115 @@
     </aside>
 
 </main>
+
+<%
+    List<Resena> resenas =
+            (List<Resena>) request.getAttribute("resenas");
+
+    Double promedioResenas =
+            (Double) request.getAttribute("promedioResenas");
+
+    if (promedioResenas == null) {
+        promedioResenas = 0.0;
+    }
+%>
+
+<section class="reviews-section">
+
+    <div class="reviews-header">
+        <h2>Reseñas de usuarios</h2>
+
+        <div class="average-rating">
+            Promedio: <%= String.format("%.1f", promedioResenas) %> / 5
+        </div>
+    </div>
+
+    <div class="review-form-box">
+
+        <h3>Escribe tu reseña</h3>
+
+        <form action="<%= request.getContextPath() %>/guardarResena" method="post">
+
+            <input type="hidden" name="rawgId" value="<%= juego.getRawgId() %>">
+
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombreUsuario" placeholder="Tu nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label>Calificación</label>
+                <select name="calificacion" required>
+                    <option value="5">5 - Excelente</option>
+                    <option value="4">4 - Muy bueno</option>
+                    <option value="3">3 - Bueno</option>
+                    <option value="2">2 - Regular</option>
+                    <option value="1">1 - Malo</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Comentario</label>
+                <textarea
+                        name="comentario"
+                        rows="4"
+                        placeholder="Escribe tu opinión sobre el videojuego..."
+                        required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                Publicar reseña
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="review-list">
+
+        <%
+            if (resenas != null && !resenas.isEmpty()) {
+
+                for (Resena r : resenas) {
+        %>
+
+        <div class="review-card">
+
+            <div class="review-top">
+                <strong><%= r.getNombreUsuario() %></strong>
+
+                <span>
+                    <%= r.getCalificacion() %> / 5
+                </span>
+            </div>
+
+            <p>
+                <%= r.getComentario() %>
+            </p>
+
+            <div class="review-date">
+                <%= r.getFecha() %>
+            </div>
+
+        </div>
+
+        <%
+            }
+
+        } else {
+        %>
+
+        <div class="empty-reviews">
+            Aún no hay reseñas para este videojuego.
+        </div>
+
+        <%
+            }
+        %>
+
+    </div>
+
+</section>
 
 </body>
 </html>
