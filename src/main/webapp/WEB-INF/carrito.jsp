@@ -187,7 +187,7 @@
             %>
 
             <tr>
-                <td><%= d.getIdJuego() %></td>
+                <td><%= d.getRawgId() %></td>
                 <td><%= d.getCantidad() %></td>
                 <td>$<%= d.getSubtotal() %></td>
                 <td>

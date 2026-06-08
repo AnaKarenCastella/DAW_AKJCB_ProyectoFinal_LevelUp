@@ -6,7 +6,10 @@ public class DetalleCarrito {
     private int cantidad;
     private double subtotal;
     private int idCarrito;
-    private int idJuego;
+
+    //private int idJuego;
+
+    private int rawgId;
 
     public DetalleCarrito() {}
 
@@ -22,6 +25,9 @@ public class DetalleCarrito {
     public int getIdCarrito() { return idCarrito; }
     public void setIdCarrito(int idCarrito) { this.idCarrito = idCarrito; }
 
-    public int getIdJuego() { return idJuego; }
-    public void setIdJuego(int idJuego) { this.idJuego = idJuego; }
+    //public int getIdJuego() { return idJuego; }
+    //public void setIdJuego(int idJuego) { this.idJuego = idJuego; }
+    public int getRawgId() { return rawgId; }
+    public void setRawgId(int rawgId) { this.rawgId = rawgId;}
+
 }

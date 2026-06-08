@@ -9,8 +9,8 @@ import java.util.List;
 public class DetalleCarritoDAO {
 
     // Agregar producto al carrito
-    public void agregarProducto(int idCarrito, int idJuego, int cantidad, double subtotal) {
-        String sql = "INSERT INTO detalle_carrito(cantidad, subtotal, id_carrito, id_juego) VALUES (?, ?, ?, ?)";
+    public void agregarProducto(int idCarrito, int rawgId, int cantidad, double subtotal) {
+        String sql = "INSERT INTO detalle_carrito(cantidad, subtotal, id_carrito, rawg_id) VALUES (?, ?, ?, ?)";
 
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -18,7 +18,7 @@ public class DetalleCarritoDAO {
             ps.setInt(1, cantidad);
             ps.setDouble(2, subtotal);
             ps.setInt(3, idCarrito);
-            ps.setInt(4, idJuego);
+            ps.setInt(4, rawgId);
 
             ps.executeUpdate();
 
@@ -45,7 +45,7 @@ public class DetalleCarritoDAO {
                 d.setCantidad(rs.getInt("cantidad"));
                 d.setSubtotal(rs.getDouble("subtotal"));
                 d.setIdCarrito(rs.getInt("id_carrito"));
-                d.setIdJuego(rs.getInt("id_juego"));
+                d.setRawgId(rs.getInt("rawg_id"));
 
                 lista.add(d);
             }
