@@ -243,12 +243,11 @@
         </div>
 
         <div class="actions">
-            <form action="<%= request.getContextPath() %>/carrito" method="post">
-                <input type="hidden" name="accion" value="vaciar">
-                <button type="submit" class="btn-danger">Vaciar carrito</button>
+            <form action="<%= request.getContextPath() %>/comprar" method="post">
+                <button type="submit" class="btn-primary">
+                    Continuar compra
+                </button>
             </form>
-
-            <button class="btn-primary">Continuar compra</button>
         </div>
 
         <%

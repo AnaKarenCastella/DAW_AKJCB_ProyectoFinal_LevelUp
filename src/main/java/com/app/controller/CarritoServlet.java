@@ -22,13 +22,17 @@ public class CarritoServlet extends HttpServlet {
     private DetalleCarritoDAO detalleCarritoDAO = new DetalleCarritoDAO();
     private RawgService rawgService = new RawgService();
 
-    private static final int USUARIO_TEMPORAL = 1;
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Carrito carrito = obtenerOCrearCarrito(USUARIO_TEMPORAL);
+        Integer idUsuario = obtenerIdUsuarioSesion(request, response);
+
+        if (idUsuario == null) {
+            return;
+        }
+
+        Carrito carrito = obtenerOCrearCarrito(idUsuario);
 
         List<DetalleCarrito> detalles =
                 detalleCarritoDAO.obtenerPorCarrito(carrito.getIdCarrito());
@@ -36,7 +40,8 @@ public class CarritoServlet extends HttpServlet {
         List<Videojuego> juegosCarrito = new ArrayList<>();
 
         for (DetalleCarrito detalle : detalles) {
-            Videojuego juego = rawgService.obtenerJuegoPorId(detalle.getRawgId());
+            Videojuego juego =
+                    rawgService.obtenerJuegoPorId(detalle.getRawgId());
 
             if (juego != null) {
                 juego.setPrecio(detalle.getSubtotal());
@@ -58,6 +63,12 @@ public class CarritoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Integer idUsuario = obtenerIdUsuarioSesion(request, response);
+
+        if (idUsuario == null) {
+            return;
+        }
+
         String accion = request.getParameter("accion");
 
         if (accion == null) {
@@ -67,15 +78,15 @@ public class CarritoServlet extends HttpServlet {
 
         switch (accion) {
             case "agregar":
-                agregarProducto(request, response);
+                agregarProducto(request, response, idUsuario);
                 break;
 
             case "eliminar":
-                eliminarProducto(request, response);
+                eliminarProducto(request, response, idUsuario);
                 break;
 
             case "vaciar":
-                vaciarCarrito(request, response);
+                vaciarCarrito(request, response, idUsuario);
                 break;
 
             default:
@@ -84,14 +95,19 @@ public class CarritoServlet extends HttpServlet {
         }
     }
 
-    private void agregarProducto(HttpServletRequest request, HttpServletResponse response)
+    private void agregarProducto(HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 int idUsuario)
             throws IOException {
 
-        int rawgId = Integer.parseInt(request.getParameter("idJuego"));
+        int rawgId =
+                Integer.parseInt(request.getParameter("idJuego"));
 
-        Carrito carrito = obtenerOCrearCarrito(USUARIO_TEMPORAL);
+        Carrito carrito =
+                obtenerOCrearCarrito(idUsuario);
 
-        Videojuego juego = rawgService.obtenerJuegoPorId(rawgId);
+        Videojuego juego =
+                rawgService.obtenerJuegoPorId(rawgId);
 
         if (juego != null) {
             int cantidad = 1;
@@ -110,36 +126,50 @@ public class CarritoServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/carrito");
     }
 
-    private void eliminarProducto(HttpServletRequest request, HttpServletResponse response)
+    private void eliminarProducto(HttpServletRequest request,
+                                  HttpServletResponse response,
+                                  int idUsuario)
             throws IOException {
 
         int idDetalleCarrito =
-                Integer.parseInt(request.getParameter("idDetalleCarrito"));
+                Integer.parseInt(
+                        request.getParameter("idDetalleCarrito")
+                );
 
         detalleCarritoDAO.eliminarDetalle(idDetalleCarrito);
 
-        Carrito carrito = obtenerOCrearCarrito(USUARIO_TEMPORAL);
+        Carrito carrito =
+                obtenerOCrearCarrito(idUsuario);
 
         recalcularTotal(carrito.getIdCarrito());
 
         response.sendRedirect(request.getContextPath() + "/carrito");
     }
 
-    private void vaciarCarrito(HttpServletRequest request, HttpServletResponse response)
+    private void vaciarCarrito(HttpServletRequest request,
+                               HttpServletResponse response,
+                               int idUsuario)
             throws IOException {
 
-        Carrito carrito = obtenerOCrearCarrito(USUARIO_TEMPORAL);
+        Carrito carrito =
+                obtenerOCrearCarrito(idUsuario);
 
-        detalleCarritoDAO.vaciarCarrito(carrito.getIdCarrito());
+        detalleCarritoDAO.vaciarCarrito(
+                carrito.getIdCarrito()
+        );
 
-        carritoDAO.actualizarTotal(carrito.getIdCarrito(), 0);
+        carritoDAO.actualizarTotal(
+                carrito.getIdCarrito(),
+                0
+        );
 
         response.sendRedirect(request.getContextPath() + "/carrito");
     }
 
     private Carrito obtenerOCrearCarrito(int idUsuario) {
 
-        Carrito carrito = carritoDAO.obtenerPorUsuario(idUsuario);
+        Carrito carrito =
+                carritoDAO.obtenerPorUsuario(idUsuario);
 
         if (carrito == null) {
             carritoDAO.crearCarrito(idUsuario);
@@ -161,5 +191,25 @@ public class CarritoServlet extends HttpServlet {
         }
 
         carritoDAO.actualizarTotal(idCarrito, total);
+    }
+
+    private Integer obtenerIdUsuarioSesion(HttpServletRequest request,
+                                           HttpServletResponse response)
+            throws IOException {
+
+        HttpSession sesion =
+                request.getSession(false);
+
+        if (sesion == null ||
+                sesion.getAttribute("idUsuario") == null) {
+
+            response.sendRedirect(
+                    request.getContextPath() + "/login"
+            );
+
+            return null;
+        }
+
+        return (Integer) sesion.getAttribute("idUsuario");
     }
 }

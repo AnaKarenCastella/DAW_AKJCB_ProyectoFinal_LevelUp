@@ -7,7 +7,8 @@ public class DetallePedido {
     private double precioUnitario;
     private double subtotal;
     private int idPedido;
-    private int idJuego;
+
+    private int rawgId;
 
     public DetallePedido() {}
 
@@ -26,6 +27,11 @@ public class DetallePedido {
     public int getIdPedido() { return idPedido; }
     public void setIdPedido(int idPedido) { this.idPedido = idPedido; }
 
-    public int getIdJuego() { return idJuego; }
-    public void setIdJuego(int idJuego) { this.idJuego = idJuego; }
+    public int getRawgId() {
+        return rawgId;
+    }
+
+    public void setRawgId(int rawgId) {
+        this.rawgId = rawgId;
+    }
 }

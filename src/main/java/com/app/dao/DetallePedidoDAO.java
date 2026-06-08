@@ -9,8 +9,8 @@ import java.util.List;
 public class DetallePedidoDAO {
 
     // Agregar detalle al pedido
-    public void agregarDetalle(int idPedido, int idJuego, int cantidad, double precioUnitario) {
-        String sql = "INSERT INTO detalle_pedido(cantidad, precio_unitario, subtotal, id_pedido, id_juego) VALUES (?, ?, ?, ?, ?)";
+    public void agregarDetalle(int idPedido, int rawgId, int cantidad, double precioUnitario) {
+        String sql = "INSERT INTO detalle_pedido(cantidad, precio_unitario, subtotal, id_pedido, rawg_id) VALUES (?, ?, ?, ?, ?)";
 
         double subtotal = cantidad * precioUnitario;
 
@@ -21,7 +21,7 @@ public class DetallePedidoDAO {
             ps.setDouble(2, precioUnitario);
             ps.setDouble(3, subtotal);
             ps.setInt(4, idPedido);
-            ps.setInt(5, idJuego);
+            ps.setInt(5, rawgId);
 
             ps.executeUpdate();
 
@@ -49,7 +49,7 @@ public class DetallePedidoDAO {
                 d.setPrecioUnitario(rs.getDouble("precio_unitario"));
                 d.setSubtotal(rs.getDouble("subtotal"));
                 d.setIdPedido(rs.getInt("id_pedido"));
-                d.setIdJuego(rs.getInt("id_juego"));
+                d.setRawgId(rs.getInt("rawg_id"));
 
                 lista.add(d);
             }
