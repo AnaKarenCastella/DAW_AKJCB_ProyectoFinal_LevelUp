@@ -2,11 +2,15 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.app.model.Carrito" %>
 <%@ page import="com.app.model.DetalleCarrito" %>
+<%@ page import="com.app.model.Videojuego" %>
 
 <%
     Carrito carrito = (Carrito) request.getAttribute("carrito");
     List<DetalleCarrito> detalles =
             (List<DetalleCarrito>) request.getAttribute("detalles");
+
+    List<Videojuego> juegosCarrito =
+            (List<Videojuego>) request.getAttribute("juegosCarrito");
 %>
 
 <!DOCTYPE html>
@@ -174,7 +178,8 @@
         <table>
             <thead>
             <tr>
-                <th>ID RAWG</th>
+                <th>Imagen</th>
+                <th>Videojuego</th>
                 <th>Cantidad</th>
                 <th>Subtotal</th>
                 <th>Acción</th>
@@ -183,17 +188,24 @@
 
             <tbody>
             <%
-                for (DetalleCarrito d : detalles) {
+                for (Videojuego juego : juegosCarrito) {
             %>
 
             <tr>
-                <td><%= d.getRawgId() %></td>
-                <td><%= d.getCantidad() %></td>
-                <td>$<%= d.getSubtotal() %></td>
+                <td>
+                    <img src="<%= juego.getImagenUrl() %>" style="width:120px; border-radius:8px;">
+                </td>
+
+                <td><%= juego.getTitulo() %></td>
+
+                <td><%= juego.getStock() %></td>
+
+                <td>$<%= juego.getPrecio() %></td>
+
                 <td>
                     <form action="<%= request.getContextPath() %>/carrito" method="post">
                         <input type="hidden" name="accion" value="eliminar">
-                        <input type="hidden" name="idDetalleCarrito" value="<%= d.getIdDetalleCarrito() %>">
+                        <input type="hidden" name="idDetalleCarrito" value="<%= juego.getIdJuego() %>">
                         <button type="submit" class="btn-danger">Eliminar</button>
                     </form>
                 </td>
@@ -202,6 +214,7 @@
             <%
                 }
             %>
+
             </tbody>
         </table>
 

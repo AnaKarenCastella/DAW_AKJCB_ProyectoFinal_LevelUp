@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/carrito")
@@ -27,16 +28,27 @@ public class CarritoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Carrito carrito =
-                obtenerOCrearCarrito(USUARIO_TEMPORAL);
+        Carrito carrito = obtenerOCrearCarrito(USUARIO_TEMPORAL);
 
         List<DetalleCarrito> detalles =
-                detalleCarritoDAO.obtenerPorCarrito(
-                        carrito.getIdCarrito()
-                );
+                detalleCarritoDAO.obtenerPorCarrito(carrito.getIdCarrito());
+
+        List<Videojuego> juegosCarrito = new ArrayList<>();
+
+        for (DetalleCarrito detalle : detalles) {
+            Videojuego juego = rawgService.obtenerJuegoPorId(detalle.getRawgId());
+
+            if (juego != null) {
+                juego.setPrecio(detalle.getSubtotal());
+                juego.setStock(detalle.getCantidad());
+                juego.setIdJuego(detalle.getIdDetalleCarrito());
+                juegosCarrito.add(juego);
+            }
+        }
 
         request.setAttribute("carrito", carrito);
         request.setAttribute("detalles", detalles);
+        request.setAttribute("juegosCarrito", juegosCarrito);
 
         request.getRequestDispatcher("/WEB-INF/carrito.jsp")
                 .forward(request, response);
@@ -49,14 +61,11 @@ public class CarritoServlet extends HttpServlet {
         String accion = request.getParameter("accion");
 
         if (accion == null) {
-            response.sendRedirect(
-                    request.getContextPath() + "/carrito"
-            );
+            response.sendRedirect(request.getContextPath() + "/carrito");
             return;
         }
 
         switch (accion) {
-
             case "agregar":
                 agregarProducto(request, response);
                 break;
@@ -70,30 +79,21 @@ public class CarritoServlet extends HttpServlet {
                 break;
 
             default:
-                response.sendRedirect(
-                        request.getContextPath() + "/carrito"
-                );
+                response.sendRedirect(request.getContextPath() + "/carrito");
                 break;
         }
     }
 
-    private void agregarProducto(HttpServletRequest request,
-                                 HttpServletResponse response)
+    private void agregarProducto(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        int rawgId =
-                Integer.parseInt(
-                        request.getParameter("idJuego")
-                );
+        int rawgId = Integer.parseInt(request.getParameter("idJuego"));
 
-        Carrito carrito =
-                obtenerOCrearCarrito(USUARIO_TEMPORAL);
+        Carrito carrito = obtenerOCrearCarrito(USUARIO_TEMPORAL);
 
-        Videojuego juego =
-                rawgService.obtenerJuegoPorId(rawgId);
+        Videojuego juego = rawgService.obtenerJuegoPorId(rawgId);
 
         if (juego != null) {
-
             int cantidad = 1;
             double subtotal = juego.getPrecio() * cantidad;
 
@@ -107,57 +107,39 @@ public class CarritoServlet extends HttpServlet {
             recalcularTotal(carrito.getIdCarrito());
         }
 
-        response.sendRedirect(
-                request.getContextPath() + "/carrito"
-        );
+        response.sendRedirect(request.getContextPath() + "/carrito");
     }
 
-    private void eliminarProducto(HttpServletRequest request,
-                                  HttpServletResponse response)
+    private void eliminarProducto(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
         int idDetalleCarrito =
-                Integer.parseInt(
-                        request.getParameter("idDetalleCarrito")
-                );
+                Integer.parseInt(request.getParameter("idDetalleCarrito"));
 
         detalleCarritoDAO.eliminarDetalle(idDetalleCarrito);
 
-        Carrito carrito =
-                obtenerOCrearCarrito(USUARIO_TEMPORAL);
+        Carrito carrito = obtenerOCrearCarrito(USUARIO_TEMPORAL);
 
         recalcularTotal(carrito.getIdCarrito());
 
-        response.sendRedirect(
-                request.getContextPath() + "/carrito"
-        );
+        response.sendRedirect(request.getContextPath() + "/carrito");
     }
 
-    private void vaciarCarrito(HttpServletRequest request,
-                               HttpServletResponse response)
+    private void vaciarCarrito(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        Carrito carrito =
-                obtenerOCrearCarrito(USUARIO_TEMPORAL);
+        Carrito carrito = obtenerOCrearCarrito(USUARIO_TEMPORAL);
 
-        detalleCarritoDAO.vaciarCarrito(
-                carrito.getIdCarrito()
-        );
+        detalleCarritoDAO.vaciarCarrito(carrito.getIdCarrito());
 
-        carritoDAO.actualizarTotal(
-                carrito.getIdCarrito(),
-                0
-        );
+        carritoDAO.actualizarTotal(carrito.getIdCarrito(), 0);
 
-        response.sendRedirect(
-                request.getContextPath() + "/carrito"
-        );
+        response.sendRedirect(request.getContextPath() + "/carrito");
     }
 
     private Carrito obtenerOCrearCarrito(int idUsuario) {
 
-        Carrito carrito =
-                carritoDAO.obtenerPorUsuario(idUsuario);
+        Carrito carrito = carritoDAO.obtenerPorUsuario(idUsuario);
 
         if (carrito == null) {
             carritoDAO.crearCarrito(idUsuario);

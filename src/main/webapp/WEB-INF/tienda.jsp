@@ -302,7 +302,9 @@
         <a href="#">Ofertas</a>
         <a href="#">Novedades</a>
         <a href="<%= request.getContextPath() %>/login">Iniciar sesión</a>
-        <a href="#">Carrito</a>
+        <a href="<%= request.getContextPath() %>/carrito">
+            Carrito
+        </a>
     </nav>
 </header>
 
