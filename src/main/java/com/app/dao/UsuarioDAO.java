@@ -121,4 +121,22 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
     }
+
+    public void actualizarPerfil(Usuario usuario) {
+        String sql = "UPDATE usuarios SET nombre=?, correo=?, telefono=? WHERE id_usuario=?";
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, usuario.getNombre());
+            ps.setString(2, usuario.getCorreo());
+            ps.setString(3, usuario.getTelefono());
+            ps.setInt(4, usuario.getIdUsuario());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
