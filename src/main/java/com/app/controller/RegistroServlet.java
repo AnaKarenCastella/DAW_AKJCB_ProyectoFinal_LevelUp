@@ -54,5 +54,14 @@ public class RegistroServlet extends HttpServlet {
         request.setAttribute("mensaje", "Registro exitoso. Ahora puedes iniciar sesión.");
         request.getRequestDispatcher("/WEB-INF/login.jsp")
                 .forward(request, response);
+
+        try {
+        } catch (Exception e) {
+            System.err.println("Error en RegistroServlet: " + e.getMessage());
+            request.setAttribute("error", "No fue posible registrar la cuenta.");
+            request.getRequestDispatcher("/WEB-INF/registro.jsp")
+                    .forward(request, response);
+        }
     }
+
 }

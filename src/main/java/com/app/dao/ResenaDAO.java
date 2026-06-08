@@ -28,7 +28,8 @@ public class ResenaDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al registrar reseña: " + e.getMessage());
+            throw new RuntimeException("No fue posible registrar la reseña.", e);
         }
     }
 

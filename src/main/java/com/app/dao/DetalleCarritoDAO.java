@@ -23,7 +23,9 @@ public class DetalleCarritoDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al agregar producto al carrito: "
+                    + e.getMessage());
+            throw new RuntimeException("No fue posible agregar el producto al carrito.", e);
         }
     }
 
@@ -101,7 +103,8 @@ public class DetalleCarritoDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al vaciar carrito: " + e.getMessage());
+            throw new RuntimeException("No fue posible vaciar el carrito.", e);
         }
     }
 }

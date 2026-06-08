@@ -44,7 +44,8 @@ public class CarritoDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error" + e.getMessage());
+            throw new RuntimeException("No fue posible actualizar el pedido", e);
         }
 
         return lista;
@@ -72,7 +73,8 @@ public class CarritoDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error" + e.getMessage());
+            throw new RuntimeException("No fue posible crear el carrito", e);
         }
 
         return c;
@@ -90,8 +92,9 @@ public class CarritoDAO {
 
             ps.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }catch (SQLException e) {
+        System.err.println("Error" + e.getMessage());
+        throw new RuntimeException("No fue posible actualizar el total", e);
         }
     }
 
@@ -106,7 +109,8 @@ public class CarritoDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+        System.err.println("Error" + e.getMessage());
+        throw new RuntimeException("No fue posible eliminar el producto del carrito", e);
         }
     }
 }

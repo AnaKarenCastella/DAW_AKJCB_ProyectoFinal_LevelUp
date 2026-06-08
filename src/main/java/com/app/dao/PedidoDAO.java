@@ -28,7 +28,8 @@ public class PedidoDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al crear pedido: " + e.getMessage());
+            throw new RuntimeException("No fue posible crear el pedido.", e);
         }
 
         return idPedido;
@@ -135,7 +136,8 @@ public class PedidoDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al actualizar estado: " + e.getMessage());
+            throw new RuntimeException("No fue posible actualizar el estado del pedido.", e);
         }
     }
 

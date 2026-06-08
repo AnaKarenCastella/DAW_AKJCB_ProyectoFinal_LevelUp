@@ -77,5 +77,11 @@ public class CompraServlet extends HttpServlet {
                         + "/compraExitosa?idPedido="
                         + idPedido
         );
+
+        try {
+        } catch (Exception e) {
+            System.err.println("Error en CompraServlet: " + e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/carrito");
+        }
     }
 }

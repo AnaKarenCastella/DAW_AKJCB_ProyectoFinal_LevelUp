@@ -24,7 +24,8 @@ public class UsuarioDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al insertar usuario: " + e.getMessage());
+            throw new RuntimeException("No fue posible registrar el usuario.", e);
         }
     }
 
@@ -51,7 +52,8 @@ public class UsuarioDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error en UsuarioDAO: " + e.getMessage());
+            throw new RuntimeException("No fue posible realizar la operación", e);
         }
 
         return lista;
@@ -80,9 +82,9 @@ public class UsuarioDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al buscar usuario: " + e.getMessage());
+            throw new RuntimeException("No fue posible buscar el usuario.", e);
         }
-
         return usuario;
     }
 
@@ -97,7 +99,8 @@ public class UsuarioDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error en UsuarioDAO: " + e.getMessage());
+            throw new RuntimeException("No fue posible realizar la operación", e);
         }
     }
 
@@ -118,7 +121,8 @@ public class UsuarioDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error en UsuarioDAO: " + e.getMessage());
+            throw new RuntimeException("No fue posible realizar la operación", e);
         }
     }
 
@@ -136,7 +140,8 @@ public class UsuarioDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error en UsuarioDAO: " + e.getMessage());
+            throw new RuntimeException("No fue posible realizar la operación", e);
         }
     }
 }

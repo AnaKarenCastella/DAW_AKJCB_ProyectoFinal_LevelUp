@@ -61,5 +61,13 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/login.jsp")
                     .forward(request, response);
         }
+
+        try {
+        } catch (Exception e) {
+            System.err.println("Error en LoginServlet: " + e.getMessage());
+            request.setAttribute("error", "Ocurrió un error al iniciar sesión.");
+            request.getRequestDispatcher("/WEB-INF/login.jsp")
+                    .forward(request, response);
+        }
     }
 }

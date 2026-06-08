@@ -92,6 +92,13 @@ public class CarritoServlet extends HttpServlet {
             default:
                 response.sendRedirect(request.getContextPath() + "/carrito");
                 break;
+
+
+        }
+        try {
+        } catch (Exception e) {
+            System.err.println("Error en CarritoServlet: " + e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/carrito");
         }
     }
 
