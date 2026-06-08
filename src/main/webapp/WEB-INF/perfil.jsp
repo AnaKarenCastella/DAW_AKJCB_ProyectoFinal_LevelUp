@@ -181,7 +181,12 @@
                    href="<%= request.getContextPath() %>/editarPerfil">
                     Editar perfil
                 </a>
-                <a class="btn btn-secondary" href="#">Historial de compras</a>
+
+                <a class="btn btn-secondary"
+                   href="<%= request.getContextPath() %>/historialCompras">
+                    Historial de compras
+                </a>
+
                 <a class="btn btn-danger" href="<%= request.getContextPath() %>/logout">Cerrar sesión</a>
             </div>
         </div>
@@ -189,6 +194,7 @@
     </div>
 
 </div>
+
 
 </body>
 </html>

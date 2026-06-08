@@ -242,13 +242,22 @@
             <span class="total">$<%= carrito != null ? carrito.getTotal() : 0 %></span>
         </div>
 
+        <script>
+            const totalCarrito =
+                <%= carrito != null ? carrito.getTotal() : 0 %>;
+        </script>
+
         <div class="actions">
-            <form action="<%= request.getContextPath() %>/comprar" method="post">
+            <form id="formCompra"
+                  action="<%= request.getContextPath() %>/comprar"
+                  method="post">
                 <button type="submit" class="btn-primary">
                     Continuar compra
                 </button>
             </form>
         </div>
+
+        <div id="paypal-button-container"></div>
 
         <%
         } else {
@@ -271,6 +280,30 @@
     </div>
 
 </div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AbNnncvMOEvekgT3uBDUxRpZUF0o38DSb34RVbkBev4w9SwLIUfbqM3iVKthMVJhRp3iHCbt0c6BlFp9&currency=MXN"></script>
+
+<script>
+    paypal.Buttons({
+
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: totalCarrito.toFixed(2)
+                    }
+                }]
+            });
+        },
+
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                document.getElementById("formCompra").submit();
+            });
+        }
+
+    }).render("#paypal-button-container");
+</script>
 
 </body>
 </html>
