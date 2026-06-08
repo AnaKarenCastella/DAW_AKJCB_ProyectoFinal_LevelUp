@@ -67,14 +67,15 @@ public class CompraServlet extends HttpServlet {
             );
         }
 
-        pedidoDAO.actualizarEstado(idPedido, "PAGADO");
+        pedidoDAO.actualizarEstado(idPedido, "CONFIRMADO");
 
         detalleCarritoDAO.vaciarCarrito(carrito.getIdCarrito());
         carritoDAO.actualizarTotal(carrito.getIdCarrito(), 0);
 
         response.sendRedirect(
                 request.getContextPath()
-                        + "/historialCompras"
+                        + "/compraExitosa?idPedido="
+                        + idPedido
         );
     }
 }
