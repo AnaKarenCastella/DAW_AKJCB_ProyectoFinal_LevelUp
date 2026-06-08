@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96029e3f-ca13-4803-af95-10222b3ba055" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/app/controller/CarritoServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/app/controller/CarritoServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/carrito.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/carrito.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="96029e3f-ca13-4803-af95-10222b3ba055" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -184,7 +180,7 @@
       <workItem from="1778164983141" duration="2511000" />
       <workItem from="1778652885613" duration="10643000" />
       <workItem from="1778770162486" duration="1287000" />
-      <workItem from="1780766947074" duration="19057000" />
+      <workItem from="1780766947074" duration="19458000" />
     </task>
     <servers />
   </component>
